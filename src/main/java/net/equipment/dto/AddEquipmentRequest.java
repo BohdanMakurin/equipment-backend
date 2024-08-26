@@ -6,6 +6,7 @@
 package net.equipment.dto;
 
 import lombok.*;
+import net.equipment.models.Company;
 
 @Data
 @Builder
@@ -16,4 +17,5 @@ public class AddEquipmentRequest {
     private String description;
     private String serialNumber;
     private Long categoryId;
+    private Company company;
 }

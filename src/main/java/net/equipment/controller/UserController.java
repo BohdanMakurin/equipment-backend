@@ -1,8 +1,11 @@
 package net.equipment.controller;
 
 import lombok.AllArgsConstructor;
+import net.equipment.dto.CreateUserRequest;
 import net.equipment.dto.EditUserRequest;
 import net.equipment.dto.UserDto;
+import net.equipment.models.Company;
+import net.equipment.models.User;
 import net.equipment.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +25,9 @@ public class UserController {
     // add user
 
 //    @PostMapping
-//    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto){
-//       UserDto savedUser = userService.createUser(userDto);
-//       return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+//    public ResponseEntity<User> createUser(@RequestBody CreateUserRequest newUser){
+//        User savedUser = userService.createUser(newUser);
+//        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
 //    }
 
     // get user by id
@@ -64,5 +67,11 @@ public class UserController {
     public ResponseEntity<String> deleteUser(@PathVariable("id") Long userId){
         userService.deleteUser(userId);
         return ResponseEntity.ok("User deleted successfully");
+    }
+
+    @GetMapping({"byAdmin/{id}"})
+    public ResponseEntity<List<UserDto>> getUsersByAdmin(@PathVariable("id") Long adminId) throws Exception {
+        List<UserDto> users = this.userService.getUsersByAdminId(adminId);
+        return ResponseEntity.ok(users);
     }
 }

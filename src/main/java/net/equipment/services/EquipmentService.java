@@ -37,6 +37,7 @@ public class EquipmentService {
         equipment.setDescription(req.getDescription());
         equipment.setCategory(existingCategory);
         equipment.setSerialNumber(req.getSerialNumber());
+        equipment.setCompany(req.getCompany());
         equipment.setUpdatedAt(LocalDateTime.now());
         equipment.setCreatedAt(LocalDateTime.now());
         return equipmentRepository.save(equipment);

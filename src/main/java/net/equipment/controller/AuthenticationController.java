@@ -6,9 +6,11 @@
 package net.equipment.controller;
 
 import lombok.AllArgsConstructor;
+import net.equipment.dto.CreateUserRequest;
 import net.equipment.dto.JwtAuthenticationResponse;
 import net.equipment.dto.SignInRequest;
 import net.equipment.dto.SignUpRequest;
+import net.equipment.models.User;
 import net.equipment.services.AuthenticationService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,5 +31,10 @@ public class AuthenticationController {
     @PostMapping({"/signin"})
     public JwtAuthenticationResponse signin(@RequestBody SignInRequest request) {
         return this.authenticationService.signin(request);
+    }
+
+    @PostMapping({"/create"})
+    public User createUser(@RequestBody CreateUserRequest request) {
+        return this.authenticationService.createUser(request);
     }
 }

@@ -48,4 +48,10 @@ public class Equipment {
     @ManyToOne
     @JoinColumn(name = "location_id")
     private Location location;
+
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
+
+
 }

@@ -40,4 +40,5 @@ public class Company {
     @JsonManagedReference
     @OneToMany( mappedBy = "company")
     List<User> employees;
+
 }

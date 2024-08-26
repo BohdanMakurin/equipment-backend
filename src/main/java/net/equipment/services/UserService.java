@@ -10,11 +10,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
+import net.equipment.dto.CreateCompanyRequest;
+import net.equipment.dto.CreateUserRequest;
 import net.equipment.dto.EditUserRequest;
 import net.equipment.dto.UserDto;
 import net.equipment.exceptions.ResourceNotFoundException;
 import net.equipment.mapper.UserMapper;
+import net.equipment.models.Company;
 import net.equipment.models.User;
+import net.equipment.repositories.CompanyRepository;
 import net.equipment.repositories.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,8 +29,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class UserService {
-    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final CompanyRepository companyRepository;
 
     public UserDetailsService userDetailsService() {
         return new UserDetailsService() {
@@ -85,4 +89,12 @@ public class UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("User with this id does not exist" + userId));
         userRepository.deleteById(userId);
     }
+
+    public List<UserDto> getUsersByAdminId(Long adminId) {
+        List<User> users = userRepository.findUsersByAdminId(adminId);
+        return users.stream().map((user) -> UserMapper.mapToUserDto(user))
+                .collect(Collectors.toList());
+    }
+
+
 }
