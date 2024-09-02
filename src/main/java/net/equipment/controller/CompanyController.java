@@ -10,6 +10,7 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import net.equipment.dto.CompanyDto;
 import net.equipment.dto.CreateCompanyRequest;
+import net.equipment.dto.UpdateCompanyRequest;
 import net.equipment.models.Company;
 import net.equipment.models.User;
 import net.equipment.services.CompanyService;
@@ -31,25 +32,25 @@ public class CompanyController {
 
     @PostMapping
     public ResponseEntity<Company> createCompany(@RequestBody CreateCompanyRequest company) {
-        Company newcompany = this.companyService.createCompany(company);
+        Company newcompany = companyService.createCompany(company);
         return new ResponseEntity(newcompany, HttpStatus.CREATED);
     }
 
     @GetMapping({"{id}"})
     public ResponseEntity<Company> getCompanyById(@PathVariable("id") Long companyId) {
-        Company company = this.companyService.getCompanyById(companyId);
+        Company company = companyService.getCompanyById(companyId);
         return ResponseEntity.ok(company);
     }
 
     @GetMapping
     public ResponseEntity<List<Company>> getAllCompanies() {
-        List<Company> companies = this.companyService.getAllCompanies();
+        List<Company> companies = companyService.getAllCompanies();
         return ResponseEntity.ok(companies);
     }
 
     @PutMapping({"{id}"})
-    public ResponseEntity<CompanyDto> updateCompany(@PathVariable("id") Long companyId, @RequestBody CompanyDto updatedCompany) {
-        CompanyDto companyDto = this.companyService.updateCompany(companyId, updatedCompany);
+    public ResponseEntity<CompanyDto> updateCompany(@PathVariable("id") Long companyId, @RequestBody UpdateCompanyRequest updatedCompany) {
+        CompanyDto companyDto = companyService.updateCompany(companyId, updatedCompany);
         return ResponseEntity.ok(companyDto);
     }
 
@@ -61,25 +62,25 @@ public class CompanyController {
 
     @GetMapping({"byAdmin/{id}"})
     public ResponseEntity<List<Company>> getCompanyByAdminId(@PathVariable("id") Long adminId) throws Exception {
-        List<Company> companies = this.companyService.getCompanyByAdminId(adminId);
+        List<Company> companies = companyService.getCompanyByAdminId(adminId);
         return ResponseEntity.ok(companies);
     }
 
     @GetMapping({"employees/{id}"})
     public ResponseEntity<List<User>> getEmployees(@PathVariable("id") Long companyId) throws Exception {
-        List<User> employees = this.companyService.getEmployees(companyId);
+        List<User> employees = companyService.getEmployees(companyId);
         return ResponseEntity.ok(employees);
     }
 
     @PostMapping({"employees/{companyId}/{userId}"})
     public ResponseEntity<List<User>> addEmployee(@PathVariable("companyId") Long companyId, @PathVariable("userId") Long userId) throws Exception {
-        List<User> employees = this.companyService.addEmployee(companyId, userId);
+        List<User> employees = companyService.addEmployee(companyId, userId);
         return ResponseEntity.ok(employees);
     }
 
     @DeleteMapping({"employees/{companyId}/{userId}"})
     public ResponseEntity<List<User>> removeEmployee(@PathVariable("companyId") Long companyId, @PathVariable("userId") Long userId) throws Exception {
-        List<User> employees = this.companyService.removeEmployee(companyId, userId);
+        List<User> employees = companyService.removeEmployee(companyId, userId);
         return ResponseEntity.ok(employees);
     }
 }

@@ -17,5 +17,5 @@ public class AddEquipmentRequest {
     private String description;
     private String serialNumber;
     private Long categoryId;
-    private Company company;
+    private Long companyId;
 }

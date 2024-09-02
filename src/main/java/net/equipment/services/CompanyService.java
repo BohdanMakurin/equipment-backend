@@ -11,6 +11,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import net.equipment.dto.CompanyDto;
 import net.equipment.dto.CreateCompanyRequest;
+import net.equipment.dto.UpdateCompanyRequest;
 import net.equipment.exceptions.ResourceNotFoundException;
 import net.equipment.mapper.CompanyMapper;
 import net.equipment.models.Company;
@@ -48,9 +49,9 @@ public class CompanyService {
         return company;
     }
 
-    public CompanyDto updateCompany(Long companyId, CompanyDto updatedCompany) {
+    public CompanyDto updateCompany(Long companyId, UpdateCompanyRequest updatedCompany) {
         Company company = companyRepository.findById(companyId)
-                .orElseThrow(() -> new ResourceNotFoundException("User with this id does not exist" + companyId));
+                .orElseThrow(() -> new ResourceNotFoundException("Company with this id does not exist" + companyId));
         if (updatedCompany.getName() != null) {
             company.setName(updatedCompany.getName());
         }

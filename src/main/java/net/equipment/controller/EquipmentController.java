@@ -9,19 +9,17 @@ import java.util.List;
 
 import lombok.AllArgsConstructor;
 import net.equipment.dto.AddEquipmentRequest;
+import net.equipment.dto.CompanyDto;
+import net.equipment.dto.UpdateEquipmentRequest;
+import net.equipment.models.Company;
 import net.equipment.models.Equipment;
 import net.equipment.models.Location;
 import net.equipment.models.User;
 import net.equipment.services.EquipmentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 @AllArgsConstructor
 @RestController
 @RequestMapping({"/api/equipment"})
@@ -71,14 +69,20 @@ public class EquipmentController {
         return ResponseEntity.ok(assignedUser);
     }
 
-    @PostMapping({"location/{equipmentId}/{locationId}"})
+//    @PostMapping({"location/{equipmentId}/{locationName}"})
+//    public ResponseEntity<Equipment> addLocationToEquipment(
+//            @PathVariable("equipmentId") Long equipmentId,
+//            @PathVariable("locationName") String locationName) {
+//        Equipment equipment = equipmentService.addLocationToEquipment(equipmentId, locationName);
+//        return ResponseEntity.ok(equipment);
+//    }
+    @PostMapping({"location/{equipmentId}"})
     public ResponseEntity<Equipment> addLocationToEquipment(
             @PathVariable("equipmentId") Long equipmentId,
-            @PathVariable("locationId") Long locationId) {
-        Equipment equipment = equipmentService.addLocationToEquipment(equipmentId, locationId);
+            @RequestBody String locationName) {
+        Equipment equipment = equipmentService.addLocationToEquipment(equipmentId, locationName);
         return ResponseEntity.ok(equipment);
     }
-
     @DeleteMapping({"location/{equipmentId}"})
     public ResponseEntity<String> removeLocationFromEquipment(
             @PathVariable("equipmentId") Long equipmentId) {
@@ -86,10 +90,23 @@ public class EquipmentController {
         return ResponseEntity.ok("Location removed From Equipment successfully");
     }
 
-    @GetMapping({"location/{locationId}"})
-    public ResponseEntity<Location> getLocationAssignedToEquipment(
-            @PathVariable("locationId") Long locationId) {
-        Location assignedLocation = equipmentService.getLocationAssignedToEquipment(locationId);
-        return ResponseEntity.ok(assignedLocation);
+
+//    @GetMapping({"location/{locationId}"})
+//    public ResponseEntity<Location> getLocationAssignedToEquipment(
+//            @PathVariable("locationId") Long locationId) {
+//        Location assignedLocation = equipmentService.getLocationAssignedToEquipment(locationId);
+//        return ResponseEntity.ok(assignedLocation);
+//    }
+
+    @GetMapping({"byAdmin/{id}"})
+    public ResponseEntity<List<Equipment>> getEquipmentByAdminId(@PathVariable("id") Long adminId) throws Exception {
+        List<Equipment> equipment = equipmentService.getEquipmentByAdminId(adminId);
+        return ResponseEntity.ok(equipment);
+    }
+
+    @PutMapping({"{id}"})
+    public ResponseEntity<Equipment> updateEquipment(@PathVariable("id") Long equipmentId, @RequestBody UpdateEquipmentRequest updatedEquipment) {
+        Equipment equipment = equipmentService.updateEquipment(equipmentId, updatedEquipment);
+        return ResponseEntity.ok(equipment);
     }
 }

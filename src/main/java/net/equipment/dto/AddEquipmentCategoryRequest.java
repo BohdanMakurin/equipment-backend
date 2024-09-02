@@ -1,6 +1,7 @@
 package net.equipment.dto;
 
 import lombok.*;
+import net.equipment.models.User;
 
 @Data
 @Builder
@@ -8,4 +9,5 @@ import lombok.*;
 @AllArgsConstructor
 public class AddEquipmentCategoryRequest {
     private String name;
+    private Long adminId;
 }

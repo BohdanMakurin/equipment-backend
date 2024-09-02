@@ -45,9 +45,9 @@ public class Equipment {
     private QRCode qrCode;
 
 //    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "location_id")
-    private Location location;
+    //@ManyToOne
+    //@JoinColumn(name = "location_id")
+    private String location;
 
     @ManyToOne
     @JoinColumn(name = "company_id")

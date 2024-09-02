@@ -4,6 +4,7 @@ import java.util.List;
 
 import lombok.AllArgsConstructor;
 import net.equipment.dto.AddEquipmentCategoryRequest;
+import net.equipment.models.Company;
 import net.equipment.models.EquipmentCategory;
 import net.equipment.services.EquipmentCategoryService;
 import org.springframework.http.HttpStatus;
@@ -45,5 +46,11 @@ public class EquipmentCategoryController {
     public ResponseEntity<String> deleteEquipmentCategory(@PathVariable("id") Long equipmentCategoryId) {
         equipmentCategoryService.deleteEquipment(equipmentCategoryId);
         return ResponseEntity.ok("equipmentCategory deleted successfully");
+    }
+
+    @GetMapping({"byAdmin/{id}"})
+    public ResponseEntity<List<EquipmentCategory>> getCompanyByAdminId(@PathVariable("id") Long adminId) throws Exception {
+        List<EquipmentCategory> equipmentCategories = this.equipmentCategoryService.getEquipmentCategoryByAdminId(adminId);
+        return ResponseEntity.ok(equipmentCategories);
     }
 }
