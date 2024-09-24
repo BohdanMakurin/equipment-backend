@@ -14,4 +14,10 @@ import java.util.List;
 public interface EquipmentRepository extends JpaRepository<Equipment, Long> {
     @Query("SELECT e FROM Equipment e WHERE e.company.admin.id = :adminId")
     List<Equipment> findByAdminId(@Param("adminId") Long adminId);
+
+    @Query("SELECT e FROM Equipment e WHERE e.user.id = :userId")
+    List<Equipment> findByUserId(@Param("userId") Long adminId);
+
+    @Query("SELECT e FROM Equipment e WHERE e.company.companyId = :companyId")
+    List<Equipment> findByCompanyId(@Param("companyId") Long companyId);
 }

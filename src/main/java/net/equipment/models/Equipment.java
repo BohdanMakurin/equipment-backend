@@ -1,5 +1,6 @@
 package net.equipment.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -39,10 +40,12 @@ public class Equipment {
 //    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
+//    @JsonBackReference
     private User user;
 
-    @OneToOne(mappedBy = "equipment")
-    private QRCode qrCode;
+//    @OneToOne(mappedBy = "equipment")
+//    private QRCode qrCode;
+    private String qrCode;
 
 //    @JsonIgnore
     //@ManyToOne

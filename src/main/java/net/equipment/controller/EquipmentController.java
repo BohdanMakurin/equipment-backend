@@ -10,6 +10,7 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import net.equipment.dto.AddEquipmentRequest;
 import net.equipment.dto.CompanyDto;
+import net.equipment.dto.EquipmentDto;
 import net.equipment.dto.UpdateEquipmentRequest;
 import net.equipment.models.Company;
 import net.equipment.models.Equipment;
@@ -41,8 +42,8 @@ public class EquipmentController {
 
     @GetMapping
     public ResponseEntity<List<Equipment>> getAllEquipment() {
-        List<Equipment> companies = equipmentService.getAllEquipment();
-        return ResponseEntity.ok(companies);
+        List<Equipment> equipment = equipmentService.getAllEquipment();
+        return ResponseEntity.ok(equipment);
     }
 
     @DeleteMapping({"{id}"})
@@ -103,7 +104,16 @@ public class EquipmentController {
         List<Equipment> equipment = equipmentService.getEquipmentByAdminId(adminId);
         return ResponseEntity.ok(equipment);
     }
-
+    @GetMapping({"byUser/{id}"})
+    public ResponseEntity<List<Equipment>> getEquipmentByUserId(@PathVariable("id") Long userId) throws Exception {
+        List<Equipment> equipment = equipmentService.getEquipmentByUserId(userId);
+        return ResponseEntity.ok(equipment);
+    }
+    @GetMapping({"byCompany/{id}"})
+    public ResponseEntity<List<Equipment>> getEquipmentByCompanyId(@PathVariable("id") Long companyId) throws Exception {
+        List<Equipment> equipment = equipmentService.getEquipmentByCompanyId(companyId);
+        return ResponseEntity.ok(equipment);
+    }
     @PutMapping({"{id}"})
     public ResponseEntity<Equipment> updateEquipment(@PathVariable("id") Long equipmentId, @RequestBody UpdateEquipmentRequest updatedEquipment) {
         Equipment equipment = equipmentService.updateEquipment(equipmentId, updatedEquipment);

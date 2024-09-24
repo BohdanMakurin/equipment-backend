@@ -10,10 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
-import net.equipment.dto.CreateCompanyRequest;
-import net.equipment.dto.CreateUserRequest;
-import net.equipment.dto.EditUserRequest;
-import net.equipment.dto.UserDto;
+import net.equipment.dto.*;
 import net.equipment.exceptions.ResourceNotFoundException;
 import net.equipment.mapper.UserMapper;
 import net.equipment.models.Company;
@@ -68,7 +65,7 @@ public class UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("User with this email does not exist" + email));
         return UserMapper.mapToUserDto(user);
     }
-    public UserDto updateUser(Long userId, EditUserRequest updatedUser) {
+    public UserDto updateProfile(Long userId, EditUserRequest updatedUser) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User with this id does not exist" + userId));
 
@@ -84,6 +81,25 @@ public class UserService {
         return UserMapper.mapToUserDto(savedUser);
     }
 
+    public UserDto updateUser(Long userId, UpdateUserRequest updatedUser) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User with this id does not exist" + userId));
+
+        if (updatedUser.getCompanyId() != null) {
+            Company newCompany = companyRepository.findById(updatedUser.getCompanyId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Company with this id does not exist: " + updatedUser.getCompanyId()));
+            user.setCompany(newCompany);
+        }
+        user.setEmail(updatedUser.getEmail());
+//        user.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+//        user.setPassword(updatedUser.getPassword());
+        user.setRole(updatedUser.getRole());
+        user.setFirstName(updatedUser.getFirstName());
+        user.setLastName(updatedUser.getLastName());
+        User savedUser = userRepository.save(user);
+
+        return UserMapper.mapToUserDto(savedUser);
+    }
     public void deleteUser(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User with this id does not exist" + userId));
@@ -92,6 +108,12 @@ public class UserService {
 
     public List<UserDto> getUsersByAdminId(Long adminId) {
         List<User> users = userRepository.findUsersByAdminId(adminId);
+        return users.stream().map((user) -> UserMapper.mapToUserDto(user))
+                .collect(Collectors.toList());
+    }
+
+    public List<UserDto> getUsersByCompanyId(Long companyId) {
+        List<User> users = userRepository.findUsersByCompanyId(companyId);
         return users.stream().map((user) -> UserMapper.mapToUserDto(user))
                 .collect(Collectors.toList());
     }

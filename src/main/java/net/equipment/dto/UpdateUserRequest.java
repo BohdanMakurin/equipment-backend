@@ -17,5 +17,5 @@ public class UpdateUserRequest {
     private String lastName;
     private String email;
     private Role role;
-    private Company company;
+    private Long companyId;
 }

@@ -3,6 +3,7 @@ package net.equipment.controller;
 import lombok.AllArgsConstructor;
 import net.equipment.dto.CreateUserRequest;
 import net.equipment.dto.EditUserRequest;
+import net.equipment.dto.UpdateUserRequest;
 import net.equipment.dto.UserDto;
 import net.equipment.models.Company;
 import net.equipment.models.User;
@@ -55,12 +56,18 @@ public class UserController {
     //update user
 
     @PutMapping("{id}")
-    public  ResponseEntity<UserDto> updateUser(@PathVariable("id") Long userId,
+    public  ResponseEntity<UserDto> updateProfile(@PathVariable("id") Long userId,
                                                @RequestBody EditUserRequest updatedUser){
-        UserDto userDto = userService.updateUser(userId, updatedUser);
+        UserDto userDto = userService.updateProfile(userId, updatedUser);
         return ResponseEntity.ok(userDto);
     }
 
+    @PutMapping("/workerUpdate/{id}")
+    public  ResponseEntity<UserDto> updateUser(@PathVariable("id") Long userId,
+                                               @RequestBody UpdateUserRequest updatedUser){
+        UserDto userDto = userService.updateUser(userId, updatedUser);
+        return ResponseEntity.ok(userDto);
+    }
     //delete user
 
     @DeleteMapping("{id}")
@@ -72,6 +79,12 @@ public class UserController {
     @GetMapping({"byAdmin/{id}"})
     public ResponseEntity<List<UserDto>> getUsersByAdmin(@PathVariable("id") Long adminId) throws Exception {
         List<UserDto> users = this.userService.getUsersByAdminId(adminId);
+        return ResponseEntity.ok(users);
+    }
+
+    @GetMapping({"byCompany/{id}"})
+    public ResponseEntity<List<UserDto>> getUsersByCompany(@PathVariable("id") Long companyId) throws Exception {
+        List<UserDto> users = this.userService.getUsersByCompanyId(companyId);
         return ResponseEntity.ok(users);
     }
 }

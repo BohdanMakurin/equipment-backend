@@ -1,8 +1,8 @@
 package net.equipment.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -11,7 +11,7 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Data
 @Builder
 @NoArgsConstructor
@@ -38,7 +38,7 @@ public class User implements UserDetails {
     @JsonBackReference
     Company company;
 
-//    @JsonIgnore
+//    @JsonManagedReference
 //    @OneToMany( mappedBy = "user")
 //    List<Equipment> equipment;
 
