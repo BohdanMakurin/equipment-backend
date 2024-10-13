@@ -66,21 +66,4 @@ public class CompanyController {
         return ResponseEntity.ok(companies);
     }
 
-    @GetMapping({"employees/{id}"})
-    public ResponseEntity<List<User>> getEmployees(@PathVariable("id") Long companyId) throws Exception {
-        List<User> employees = companyService.getEmployees(companyId);
-        return ResponseEntity.ok(employees);
-    }
-
-    @PostMapping({"employees/{companyId}/{userId}"})
-    public ResponseEntity<List<User>> addEmployee(@PathVariable("companyId") Long companyId, @PathVariable("userId") Long userId) throws Exception {
-        List<User> employees = companyService.addEmployee(companyId, userId);
-        return ResponseEntity.ok(employees);
-    }
-
-    @DeleteMapping({"employees/{companyId}/{userId}"})
-    public ResponseEntity<List<User>> removeEmployee(@PathVariable("companyId") Long companyId, @PathVariable("userId") Long userId) throws Exception {
-        List<User> employees = companyService.removeEmployee(companyId, userId);
-        return ResponseEntity.ok(employees);
-    }
 }

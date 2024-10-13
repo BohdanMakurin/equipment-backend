@@ -1,7 +1,7 @@
 package net.equipment.services;
 
-import net.equipment.dto.CreateUserRequest;
-import net.equipment.dto.SignInRequest;
+import net.equipment.dto.*;
+import net.equipment.mapper.UserMapper;
 import net.equipment.models.Role;
 import net.equipment.repositories.CompanyRepository;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -9,11 +9,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import net.equipment.repositories.UserRepository;
-import net.equipment.dto.JwtAuthenticationResponse;
-import net.equipment.dto.SignUpRequest;
 import net.equipment.models.User;
 import net.equipment.services.JwtService;
 import lombok.RequiredArgsConstructor;
+
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -51,7 +51,7 @@ public class AuthenticationService {
         return JwtAuthenticationResponse.builder().token(jwt).build();
     }
 
-    public User createUser(CreateUserRequest request) {
+    public UserDto createUser(CreateUserRequest request) {
         var user = User
                 .builder()
                 .firstName(request.getFirstName())
@@ -65,6 +65,6 @@ public class AuthenticationService {
 
         user = userService.save(user);
         var jwt = jwtService.generateToken(user);
-        return user;
+        return UserMapper.mapToUserDto(user);
     }
 }

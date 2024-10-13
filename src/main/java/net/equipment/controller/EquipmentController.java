@@ -51,57 +51,10 @@ public class EquipmentController {
         equipmentService.deleteEquipment(equipmentId);
         return ResponseEntity.ok("equipment deleted successfully");
     }
-
-    @PostMapping({"user/{equipmentId}/{userId}"})
-    public ResponseEntity<Equipment> addUserToEquipment(@PathVariable("equipmentId") Long equipmentId, @PathVariable("userId") Long userId) {
-        Equipment equipment = equipmentService.addUserToEquipment(equipmentId, userId);
-        return ResponseEntity.ok(equipment);
-    }
-
-    @DeleteMapping({"user/{equipmentId}"})
-    public ResponseEntity<String> removeUserFromEquipment(@PathVariable("equipmentId") Long equipmentId) {
-        equipmentService.removeUserFromEquipment(equipmentId);
-        return ResponseEntity.ok("User removed From Equipment successfully");
-    }
-
-    @GetMapping({"user/{userId}"})
-    public ResponseEntity<User> getUserAssignedToEquipment(@PathVariable("userId") Long userId) {
-        User assignedUser = equipmentService.getUserAssignedToEquipment(userId);
-        return ResponseEntity.ok(assignedUser);
-    }
-
-//    @PostMapping({"location/{equipmentId}/{locationName}"})
-//    public ResponseEntity<Equipment> addLocationToEquipment(
-//            @PathVariable("equipmentId") Long equipmentId,
-//            @PathVariable("locationName") String locationName) {
-//        Equipment equipment = equipmentService.addLocationToEquipment(equipmentId, locationName);
-//        return ResponseEntity.ok(equipment);
-//    }
-    @PostMapping({"location/{equipmentId}"})
-    public ResponseEntity<Equipment> addLocationToEquipment(
-            @PathVariable("equipmentId") Long equipmentId,
-            @RequestBody String locationName) {
-        Equipment equipment = equipmentService.addLocationToEquipment(equipmentId, locationName);
-        return ResponseEntity.ok(equipment);
-    }
-    @DeleteMapping({"location/{equipmentId}"})
-    public ResponseEntity<String> removeLocationFromEquipment(
-            @PathVariable("equipmentId") Long equipmentId) {
-       equipmentService.removeLocationFromEquipment(equipmentId);
-        return ResponseEntity.ok("Location removed From Equipment successfully");
-    }
-
-
-//    @GetMapping({"location/{locationId}"})
-//    public ResponseEntity<Location> getLocationAssignedToEquipment(
-//            @PathVariable("locationId") Long locationId) {
-//        Location assignedLocation = equipmentService.getLocationAssignedToEquipment(locationId);
-//        return ResponseEntity.ok(assignedLocation);
-//    }
-
+    
     @GetMapping({"byAdmin/{id}"})
-    public ResponseEntity<List<Equipment>> getEquipmentByAdminId(@PathVariable("id") Long adminId) throws Exception {
-        List<Equipment> equipment = equipmentService.getEquipmentByAdminId(adminId);
+    public ResponseEntity<List<EquipmentDto>> getEquipmentByAdminId(@PathVariable("id") Long adminId) throws Exception {
+        List<EquipmentDto> equipment = equipmentService.getEquipmentByAdminId(adminId);
         return ResponseEntity.ok(equipment);
     }
     @GetMapping({"byUser/{id}"})

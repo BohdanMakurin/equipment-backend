@@ -6,10 +6,7 @@
 package net.equipment.controller;
 
 import lombok.AllArgsConstructor;
-import net.equipment.dto.CreateUserRequest;
-import net.equipment.dto.JwtAuthenticationResponse;
-import net.equipment.dto.SignInRequest;
-import net.equipment.dto.SignUpRequest;
+import net.equipment.dto.*;
 import net.equipment.models.User;
 import net.equipment.services.AuthenticationService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +31,7 @@ public class AuthenticationController {
     }
 
     @PostMapping({"/create"})
-    public User createUser(@RequestBody CreateUserRequest request) {
+    public UserDto createUser(@RequestBody CreateUserRequest request) {
         return this.authenticationService.createUser(request);
     }
 }

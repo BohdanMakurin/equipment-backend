@@ -21,7 +21,7 @@ public class UserMapper {
                 user.getEmail(),
                 user.getRole(),
                 user.getCompany(),
-//                user.getEquipment(),
+                user.getEquipment(),
                 user.getCreatedAt(),
                 user.getUpdatedAt());
     }
@@ -35,7 +35,7 @@ public class UserMapper {
                 userDto.getEmail(),
                 userDto.getRole(),
                 userDto.getCompany(),
-//                userDto.getEquipment(),
+                userDto.getEquipment(),
                 userDto.getCreatedAt(),
                 userDto.getUpdatedAt());
     }

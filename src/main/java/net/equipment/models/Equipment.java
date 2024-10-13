@@ -2,15 +2,9 @@ package net.equipment.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
+import net.equipment.dto.UserDto;
 
 import java.time.LocalDateTime;
 
@@ -38,9 +32,8 @@ public class Equipment {
     private EquipmentCategory category;
 
 //    @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-//    @JsonBackReference
     private User user;
 
 //    @OneToOne(mappedBy = "equipment")

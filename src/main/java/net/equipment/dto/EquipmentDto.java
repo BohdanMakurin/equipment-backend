@@ -24,8 +24,8 @@ public class EquipmentDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private EquipmentCategory category;
-    private User user;
+    private Long userId;
+    private String qrCode;
     private String location;
     private Company company;
-
 }

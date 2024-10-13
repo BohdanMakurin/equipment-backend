@@ -73,10 +73,6 @@ public class EquipmentService {
     }
 
     public List<Equipment> getAllEquipment() {
-
-//        List<Equipment> equipment = equipmentRepository.findAll();
-//        return equipment.stream().map((equip) -> EquipmentMapper.mapToEquipmentDto(equip))
-//                .collect(Collectors.toList());
         return equipmentRepository.findAll();
     }
 
@@ -112,68 +108,13 @@ public class EquipmentService {
         }
     }
 
-    public Equipment addUserToEquipment(Long equipmentId, Long userId) {
-        Equipment equipment = equipmentRepository.findById(equipmentId)
-                .orElseThrow(() -> new ResourceNotFoundException("Equipment with this id does not exist" + equipmentId));
-
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("Equipment with this id does not exist" + userId));
-
-        equipment.setUser(user);
-        equipment.setUpdatedAt(LocalDateTime.now());
-
-        return equipmentRepository.save(equipment);
-    }
-
-    public void removeUserFromEquipment(Long equipmentId) {
-        Equipment equipment = equipmentRepository.findById(equipmentId)
-                .orElseThrow(() -> new ResourceNotFoundException("Equipment with this id does not exist" + equipmentId));
-
-        equipment.setUser(null);
-        equipment.setUpdatedAt(LocalDateTime.now());
-        equipmentRepository.save(equipment);
-    }
-
-    public User getUserAssignedToEquipment(Long equipmentId) {
-        Equipment equipment = equipmentRepository.findById(equipmentId)
-                .orElseThrow(() -> new ResourceNotFoundException("Equipment with this id does not exist" + equipmentId));
-        return equipment.getUser();
-    }
-
-    public Equipment addLocationToEquipment(Long equipmentId, String locationName) {
-        Equipment equipment = equipmentRepository.findById(equipmentId)
-                .orElseThrow(() -> new ResourceNotFoundException("Equipment with this id does not exist" + equipmentId));
-
-//        Location location = locationRepository.findById(locationId)
-//                .orElseThrow(() -> new ResourceNotFoundException("location with this id does not exist" + locationId));
-
-        equipment.setLocation(locationName);
-        equipment.setUpdatedAt(LocalDateTime.now());
-
-        return equipmentRepository.save(equipment);
-    }
-
-    public void removeLocationFromEquipment(Long equipmentId) {
-        Equipment equipment = equipmentRepository.findById(equipmentId)
-                .orElseThrow(() -> new ResourceNotFoundException("Equipment with this id does not exist" + equipmentId));
-
-        equipment.setLocation(null);
-        equipment.setUpdatedAt(LocalDateTime.now());
-        equipmentRepository.save(equipment);
-    }
-
-//    public Location getLocationAssignedToEquipment(Long equipmentId) {
-//        Equipment equipment = equipmentRepository.findById(equipmentId)
-//                .orElseThrow(() -> new ResourceNotFoundException("Equipment with this id does not exist" + equipmentId));
-//        return equipment.getLocation();
-//    }
-
-    public List<Equipment> getEquipmentByAdminId(Long adminId) throws Exception {
+    public List<EquipmentDto> getEquipmentByAdminId(Long adminId) throws Exception {
         List<Equipment> equipment = equipmentRepository.findByAdminId(adminId);
         if (equipment.isEmpty()) {
             throw new Exception("equipment not found with admin id " + adminId);
         } else {
-            return equipment;
+            return equipment.stream().map((equip) -> EquipmentMapper.mapToEquipmentDto(equip))
+                    .collect(Collectors.toList());
         }
     }
 

@@ -39,8 +39,9 @@ public class User implements UserDetails {
     Company company;
 
 //    @JsonManagedReference
-//    @OneToMany( mappedBy = "user")
-//    List<Equipment> equipment;
+    @JsonIgnore
+    @OneToMany( mappedBy = "user")
+    List<Equipment> equipment;
 
     LocalDateTime createdAt;
     LocalDateTime updatedAt;

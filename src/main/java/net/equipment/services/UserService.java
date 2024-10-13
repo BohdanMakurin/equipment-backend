@@ -45,7 +45,9 @@ public class UserService {
         }
 
         newUser.setUpdatedAt(LocalDateTime.now());
-        return userRepository.save(newUser);
+        User savedUser = userRepository.save(newUser);
+        return userRepository.findById(savedUser.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("User with this id does not exist" + savedUser.getId()));
     }
 
     public List<UserDto> getAllUsers() {

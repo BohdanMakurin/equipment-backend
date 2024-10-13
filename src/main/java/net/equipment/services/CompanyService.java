@@ -80,42 +80,4 @@ public class CompanyService {
         }
     }
 
-    public List<User> getEmployees(Long companyId) throws Exception {
-        Company company = companyRepository.findById(companyId)
-                .orElseThrow(() -> new ResourceNotFoundException("company with this id does not exist" + companyId));
-        return company.getEmployees();
-    }
-
-    public List<User> addEmployee(Long companyId, Long userId) throws Exception {
-        Company company = companyRepository.findById(companyId)
-                .orElseThrow(() -> new ResourceNotFoundException("company with this id does not exist" + companyId));
-        User newEmployee = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("employee with this id does not exist" + userId));
-
-        newEmployee.setCompany(company);
-        List<User> employees = company.getEmployees();
-        employees.add(newEmployee);
-        company.setEmployees(employees);
-        company.setUpdatedAt(LocalDateTime.now());
-        User savedEmployee = userRepository.save(newEmployee);
-        Company savedCompany = companyRepository.save(company);
-
-        return savedCompany.getEmployees();
-    }
-
-    public List<User> removeEmployee(Long companyId, Long userId) throws Exception {
-        Company company = companyRepository.findById(companyId)
-                .orElseThrow(() -> new ResourceNotFoundException("company with this id does not exist" + companyId));
-        User employee = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("employee with this id does not exist" + userId));
-
-        employee.setCompany(null);
-        List<User> employees = company.getEmployees();
-        employees.remove(employee);
-        company.setEmployees(employees);
-        company.setUpdatedAt(LocalDateTime.now());
-        userRepository.save(employee);
-        Company savedCompany = companyRepository.save(company);
-        return savedCompany.getEmployees();
-    }
 }

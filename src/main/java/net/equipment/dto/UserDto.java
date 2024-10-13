@@ -25,7 +25,7 @@ public class UserDto {
     private String email;
     private Role role;
     private Company company;
-//    private List<Equipment> Equipment;
+    private List<Equipment> equipment;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

@@ -22,7 +22,7 @@ public class WebConfig {
             }
             @Override
             public void addResourceHandlers(ResourceHandlerRegistry registry) {
-                registry.addResourceHandler("/qr-codes/**")
+                registry.addResourceHandler("qr-codes/")
                         .addResourceLocations("classpath:/static/qr-codes/");
             }
         };
