@@ -93,8 +93,6 @@ public class UserService {
             user.setCompany(newCompany);
         }
         user.setEmail(updatedUser.getEmail());
-//        user.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
-//        user.setPassword(updatedUser.getPassword());
         user.setRole(updatedUser.getRole());
         user.setFirstName(updatedUser.getFirstName());
         user.setLastName(updatedUser.getLastName());

@@ -13,6 +13,7 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
@@ -37,8 +38,6 @@ public class EquipmentService {
     private final UserRepository userRepository;
     private final CompanyRepository companyRepository;
     private final EquipmentCategoryRepository equipmentCategoryRepository;
-    private final LocationRepository locationRepository;
-    private final QRCodeRepository qrCodeRepository;
 
     @SneakyThrows
     public Equipment addEquipment(AddEquipmentRequest req) {
@@ -56,17 +55,11 @@ public class EquipmentService {
         equipment.setUpdatedAt(LocalDateTime.now());
         equipment.setCreatedAt(LocalDateTime.now());
 
+
+        String qrCodeKey = UUID.randomUUID().toString();
+        equipment.setQrCode(qrCodeKey);
+
         Equipment savedEquipment = equipmentRepository.save(equipment);
-
-        // Генерация QR-кода и сохранение его в файл
-        String qrCodeText = "Product ID: " + savedEquipment.getEquipmentId();
-        String qrCodeFilePath = "qr-codes/" + savedEquipment.getEquipmentId() + ".png";
-        net.equipment.services.QRCodeGenerator.generateQRCode(qrCodeText, qrCodeFilePath);
-
-        // Привязка пути к QR-коду к продукту (при необходимости)
-        savedEquipment.setQrCode(qrCodeFilePath);
-        equipmentRepository.save(savedEquipment);
-
 
         return equipmentRepository.save(savedEquipment);
 
@@ -83,29 +76,12 @@ public class EquipmentService {
     }
 
     public void deleteEquipment(Long equipmentId) {
-        // Найти оборудование по ID
+
         Equipment equipment = equipmentRepository.findById(equipmentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Equipment with this id does not exist: " + equipmentId));
 
-        // Удалить запись оборудования из базы данных
         equipmentRepository.deleteById(equipmentId);
 
-        // Путь к файлу QR-кода
-        String fileName = equipmentId + ".png"; // Имя файла QR-кода основывается на ID оборудования
-        Path qrCodePath = Paths.get("src/main/resources/static/qr-codes/" + fileName);
-
-        try {
-            // Проверка существования файла и его удаление
-            if (Files.exists(qrCodePath)) {
-                Files.delete(qrCodePath);
-                System.out.println("QR code deleted: " + fileName);
-            } else {
-                System.out.println("QR code not found: " + fileName);
-            }
-        } catch (IOException e) {
-            System.err.println("Error deleting QR code: " + e.getMessage());
-            // Можно добавить обработку исключений, если необходимо
-        }
     }
 
     public List<EquipmentDto> getEquipmentByAdminId(Long adminId) throws Exception {
@@ -118,21 +94,23 @@ public class EquipmentService {
         }
     }
 
-    public List<Equipment> getEquipmentByUserId(Long adminId) throws Exception {
+    public List<EquipmentDto> getEquipmentByUserId(Long adminId) throws Exception {
         List<Equipment> equipment = equipmentRepository.findByUserId(adminId);
         if (equipment.isEmpty()) {
             throw new Exception("equipment not found with user id " + adminId);
         } else {
-            return equipment;
+            return equipment.stream().map((equip) -> EquipmentMapper.mapToEquipmentDto(equip))
+                    .collect(Collectors.toList());
         }
     }
 
-    public List<Equipment> getEquipmentByCompanyId(Long companyId) throws Exception {
+    public List<EquipmentDto> getEquipmentByCompanyId(Long companyId) throws Exception {
         List<Equipment> equipment = equipmentRepository.findByCompanyId(companyId);
         if (equipment.isEmpty()) {
             throw new Exception("equipment not found with company id " + companyId);
         } else {
-            return equipment;
+            return equipment.stream().map((equip) -> EquipmentMapper.mapToEquipmentDto(equip))
+                    .collect(Collectors.toList());
         }
     }
 
