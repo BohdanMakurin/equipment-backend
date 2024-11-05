@@ -29,7 +29,7 @@ public class CompanyService {
     public Company createCompany(CreateCompanyRequest req) {
         User existingAdmin = userRepository.findById(req.getAdminId())
                 .orElseThrow(() -> new ResourceNotFoundException("Admin with id " + req.getAdminId() + " not found"));
-
+        
         Company company = new Company();
         company.setName(req.getName());
         company.setDescription(req.getDescription());
