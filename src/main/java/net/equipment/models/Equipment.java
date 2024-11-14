@@ -36,13 +36,8 @@ public class Equipment {
     @JoinColumn(name = "user_id")
     private User user;
 
-//    @OneToOne(mappedBy = "equipment")
-//    private QRCode qrCode;
     private String qrCode;
 
-//    @JsonIgnore
-    //@ManyToOne
-    //@JoinColumn(name = "location_id")
     private String location;
 
     @ManyToOne

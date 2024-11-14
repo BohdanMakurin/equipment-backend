@@ -36,7 +36,6 @@ public class Company {
     String description;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
-//    @JsonIgnore
     @JsonManagedReference
     @OneToMany( mappedBy = "company")
     List<User> employees;
