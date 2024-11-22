@@ -21,4 +21,5 @@ public class EquipmentCategory {
     @JoinColumn(name = "admin_id")
     private User admin;
 
+    private Integer expirationPeriodInMonths;
 }

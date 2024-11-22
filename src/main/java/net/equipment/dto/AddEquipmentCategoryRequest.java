@@ -10,4 +10,5 @@ import net.equipment.models.User;
 public class AddEquipmentCategoryRequest {
     private String name;
     private Long adminId;
+    private Integer expirationPeriodInMonths;
 }

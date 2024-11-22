@@ -1,15 +1,8 @@
 package net.equipment.mapper;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import net.equipment.dto.EquipmentDto;
-import net.equipment.models.Company;
-import net.equipment.models.Equipment;
-import net.equipment.models.EquipmentCategory;
-import net.equipment.models.User;
 
-import java.time.LocalDateTime;
+import net.equipment.dto.EquipmentDto;
+import net.equipment.models.Equipment;
 
 public class EquipmentMapper {
 

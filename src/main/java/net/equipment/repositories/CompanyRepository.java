@@ -1,7 +1,3 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
 
 package net.equipment.repositories;
 
@@ -12,5 +8,12 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CompanyRepository extends JpaRepository<Company, Long> {
+
+    /**
+     * Finds all companies associated with a specific admin.
+     *
+     * @param userId the ID of the admin whose companies are to be retrieved
+     * @return a list of companies associated with the specified admin
+     */
     List<Company> findByAdminId(Long userId);
 }

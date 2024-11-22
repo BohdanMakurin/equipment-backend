@@ -1,7 +1,3 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
 
 package net.equipment.repositories;
 
@@ -14,5 +10,12 @@ import java.util.List;
 
 @Repository
 public interface EquipmentCategoryRepository extends JpaRepository<EquipmentCategory, Long> {
+
+    /**
+     * Finds all equipment categories associated with a specific admin.
+     *
+     * @param userId the ID of the admin whose equipment categories are to be retrieved
+     * @return a list of equipment categories associated with the specified admin
+     */
     List<EquipmentCategory> findByAdminId(Long userId);
 }
