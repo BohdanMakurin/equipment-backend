@@ -34,7 +34,7 @@ public class User implements UserDetails {
     Role role;
 
     @ManyToOne
-    @JoinColumn(name = "company_id")
+    @JoinColumn(name = "company_id", referencedColumnName = "company_id")
     @JsonBackReference
     Company company;
 

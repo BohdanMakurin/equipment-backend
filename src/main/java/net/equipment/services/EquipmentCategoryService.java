@@ -92,6 +92,16 @@ public class EquipmentCategoryService {
         }
     }
 
+    /**
+     * Updates the details of an existing equipment category by its ID.
+     * The fields that can be updated include the category name and expiration period.
+     * If a field is not provided in the request, it will remain unchanged.
+     *
+     * @param equipmentCategoryId the ID of the equipment category to update
+     * @param updatedEquipment the request object containing updated category details (name and expiration period)
+     * @return the updated {@link EquipmentCategory} object
+     * @throws ResourceNotFoundException if the equipment category with the provided ID is not found
+     */
     public EquipmentCategory updateEquipmentCategory(Long equipmentCategoryId, UpdateEquipmentCategoryRequest updatedEquipment) {
         EquipmentCategory equipmentCategory = equipmentCategoryRepository.findById(equipmentCategoryId)
                 .orElseThrow(() -> new ResourceNotFoundException("Equipment Category with this id does not exist: " + equipmentCategoryId));

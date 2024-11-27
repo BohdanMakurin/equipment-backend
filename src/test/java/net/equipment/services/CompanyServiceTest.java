@@ -8,7 +8,6 @@ import net.equipment.models.Company;
 import net.equipment.models.User;
 import net.equipment.repositories.CompanyRepository;
 import net.equipment.repositories.UserRepository;
-import net.equipment.services.CompanyService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
