@@ -1,6 +1,9 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven 3.9.9'
+    }
     stages {
 
         stage('Checkout') {
@@ -13,7 +16,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building the project...'
-                bat 'F:\\Programs\\apache-maven-3.9.9\\bin\\mvn clean package'
+                bat 'mvn clean package'
             }
         }
 
@@ -21,7 +24,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                bat 'F:\\Programs\\apache-maven-3.9.9\\bin\\mvn test'
+                bat 'mvn test'
             }
             post {
                 always {
@@ -35,7 +38,7 @@ pipeline {
         stage('Generate JavaDoc') {
             steps {
                 echo 'Generating JavaDoc...'
-                bat 'F:\\Programs\\apache-maven-3.9.9\\bin\\mvn javadoc:javadoc'
+                bat 'mvn javadoc:javadoc'
             }
         }
     }
