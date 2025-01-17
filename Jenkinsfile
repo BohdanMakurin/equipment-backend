@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     stages {
-        // Этап клонирования репозитория из Git
+
         stage('Checkout') {
             steps {
                 git branch: 'master', url: 'https://github.com/perdoshmit/equipment-backend.git'
             }
         }
 
-        // Этап сборки проекта с помощью Maven
+
         stage('Build') {
             steps {
                 echo 'Building the project...'
@@ -17,7 +17,7 @@ pipeline {
             }
         }
 
-        // Этап тестирования
+
         stage('Test') {
             steps {
                 echo 'Running tests...'
@@ -25,13 +25,13 @@ pipeline {
             }
             post {
                 always {
-                    // Публикуем результаты тестов, найденные в папке target/surefire-reports
+
                     junit '**/target/surefire-reports/*.xml'
                 }
             }
         }
 
-        // Этап генерации JavaDoc
+
         stage('Generate JavaDoc') {
             steps {
                 echo 'Generating JavaDoc...'
@@ -47,6 +47,16 @@ pipeline {
 
         success {
             echo 'Build succeeded!'
+
+                archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
+
+                archiveArtifacts artifacts: '**/target/site/apidocs/**', allowEmptyArchive: true
+    
+                publishHTML([
+                    reportDir: 'target/site/apidocs',
+                    reportFiles: 'index.html',
+                    reportName: 'JavaDoc'
+                ])
         }
 
         failure {

@@ -38,7 +38,6 @@ public class User implements UserDetails {
     @JsonBackReference
     Company company;
 
-//    @JsonManagedReference
     @JsonIgnore
     @OneToMany( mappedBy = "user")
     List<Equipment> equipment;

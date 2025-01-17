@@ -39,30 +39,24 @@ class ExpiredEquipmentReportServiceTest {
         Long companyId = 1L;
         LocalDateTime now = LocalDateTime.now();
 
-        // Моделируем категорию оборудования с истечением через 12 месяцев
         EquipmentCategory category1 = new EquipmentCategory();
         category1.setCategoryId(1L);
         category1.setExpirationPeriodInMonths(12);
 
-        // Моделируем оборудование, созданное 13 месяцев назад (должно быть просрочено)
         Equipment expiredEquipment1 = new Equipment();
         expiredEquipment1.setEquipmentId(1L);
         expiredEquipment1.setCreatedAt(now.minusMonths(13));
 
-        // Моделируем оборудование, созданное 10 месяцев назад (не просрочено)
         Equipment validEquipment1 = new Equipment();
         validEquipment1.setEquipmentId(2L);
         validEquipment1.setCreatedAt(now.minusMonths(10));
 
-        // Настраиваем поведение моков
         when(equipmentCategoryRepository.findAll()).thenReturn(Collections.singletonList(category1));
         when(equipmentRepository.findByCategoryIdAndCompanyId(1L, companyId))
                 .thenReturn(Arrays.asList(expiredEquipment1, validEquipment1));
 
-        // Выполняем метод и проверяем результаты
         List<Equipment> expiredEquipment = expiredEquipmentReportService.expiredEquipmentReport(companyId);
 
-        // Должно вернуться только просроченное оборудование
         assertEquals(1, expiredEquipment.size());
         assertEquals(expiredEquipment1.getEquipmentId(), expiredEquipment.get(0).getEquipmentId());
     }
@@ -72,25 +66,20 @@ class ExpiredEquipmentReportServiceTest {
         Long companyId = 1L;
         LocalDateTime now = LocalDateTime.now();
 
-        // Моделируем категорию оборудования с истечением через 6 месяцев
         EquipmentCategory category2 = new EquipmentCategory();
         category2.setCategoryId(2L);
         category2.setExpirationPeriodInMonths(6);
 
-        // Моделируем оборудование, созданное 3 месяца назад (не просрочено)
         Equipment validEquipment2 = new Equipment();
         validEquipment2.setEquipmentId(3L);
         validEquipment2.setCreatedAt(now.minusMonths(3));
 
-        // Настраиваем поведение моков
         when(equipmentCategoryRepository.findAll()).thenReturn(Collections.singletonList(category2));
         when(equipmentRepository.findByCategoryIdAndCompanyId(2L, companyId))
                 .thenReturn(Collections.singletonList(validEquipment2));
 
-        // Выполняем метод и проверяем результаты
         List<Equipment> expiredEquipment = expiredEquipmentReportService.expiredEquipmentReport(companyId);
 
-        // Список просроченного оборудования должен быть пустым
         assertEquals(0, expiredEquipment.size());
     }
 }

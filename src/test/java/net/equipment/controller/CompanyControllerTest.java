@@ -48,7 +48,6 @@ public class CompanyControllerTest {
     void testCreateCompany() throws Exception {
         CreateCompanyRequest request = new CreateCompanyRequest();
 
-        // Создаем объект компании через сеттеры
         Company company = new Company();
         company.setCompanyId(1L);
         company.setName("New Company");
@@ -69,7 +68,6 @@ public class CompanyControllerTest {
     @Test
     @WithMockUser
     void testGetCompanyById() throws Exception {
-        // Создаем объект компании через сеттеры
         Company company = new Company();
         company.setCompanyId(1L);
         company.setName("Test Company");
@@ -88,7 +86,6 @@ public class CompanyControllerTest {
     @Test
     @WithMockUser
     void testGetAllCompanies() throws Exception {
-        // Создаем список компаний через сеттеры
         Company company1 = new Company();
         company1.setCompanyId(1L);
         company1.setName("Company 1");
@@ -116,7 +113,6 @@ public class CompanyControllerTest {
     void testUpdateCompany() throws Exception {
         UpdateCompanyRequest updateRequest = new UpdateCompanyRequest("Updated Company", "Updated Description");
 
-        // Создаем объект компании через сеттеры
         CompanyDto company = new CompanyDto();
         company.setCompanyId(1L);
         company.setName("Updated Company");
@@ -149,7 +145,6 @@ public class CompanyControllerTest {
     @Test
     @WithMockUser
     void testGetCompanyByAdminId() throws Exception {
-        // Создаем список компаний через сеттеры
         Company company1 = new Company();
         company1.setCompanyId(1L);
         company1.setName("Company 1");

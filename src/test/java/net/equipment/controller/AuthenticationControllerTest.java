@@ -96,19 +96,15 @@ public class AuthenticationControllerTest {
     @Test
     @WithMockUser
     void testCreateUser() throws Exception {
-        // Создаем объект запроса для создания пользователя
         CreateUserRequest request = new CreateUserRequest();
 
-        // Создаем объект DTO пользователя, который будет возвращен
         UserDto userDto = new UserDto();
         userDto.setId(1L);
         userDto.setFirstName("username");
         userDto.setEmail("email@example.com");
 
-        // Мокаем сервис, чтобы он возвращал созданного пользователя
         when(authenticationService.createUser(any(CreateUserRequest.class))).thenReturn(userDto);
 
-        // Выполняем POST-запрос
         mockMvc.perform(post("/api/v1/create")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(request)))
@@ -117,7 +113,6 @@ public class AuthenticationControllerTest {
                 .andExpect(jsonPath("$.firstName").value("username"))
                 .andExpect(jsonPath("$.email").value("email@example.com"));
 
-        // Проверяем, что сервис был вызван один раз с переданным запросом
         verify(authenticationService, times(1)).createUser(any(CreateUserRequest.class));
     }
 }

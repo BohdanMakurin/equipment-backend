@@ -31,7 +31,6 @@ public class Equipment {
     @JoinColumn(name = "category_id")
     private EquipmentCategory category;
 
-//    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
