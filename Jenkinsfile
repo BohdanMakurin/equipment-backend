@@ -51,11 +51,14 @@ pipeline {
                 archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
 
                 archiveArtifacts artifacts: '**/target/site/apidocs/**', allowEmptyArchive: true
-    
+
                 publishHTML([
                     reportDir: 'target/site/apidocs',
                     reportFiles: 'index.html',
-                    reportName: 'JavaDoc'
+                    reportName: 'JavaDoc',
+                    keepAll: true,
+                    alwaysLinkToLastBuild: true,
+                    allowMissing: false
                 ])
         }
 
